@@ -1,7 +1,7 @@
 import { Center, Flex, Heading, Skeleton, Spinner, Tag, Text } from '@chakra-ui/react';
 import type { NextPage } from 'next';
 import dynamic from 'next/dynamic';
-import { useEffect, useState } from 'react';
+import { useState, useEffect } from 'react';
 import EventsForm from '../../components/EventsPage/EventsForm';
 import EventsGrid from '../../components/EventsPage/ExploreGrid';
 import ModalAllowLocation from '../../components/EventsPage/ModalAllowLocation';
@@ -70,13 +70,11 @@ const Events: NextPage = () => {
         >
           <EventsForm fetch={fetchEvents} refetch={refetchEvents} />
           <Flex alignItems={'center'} gap={4} justifyContent={'space-between'}>
-            <Skeleton isLoaded={data?.eventMany !== undefined}>
-              <Heading size={'md'}>
-                {data?.eventMany?.totalCount && data.eventMany.totalCount > 0
-                  ? `Search results: ${data?.eventMany?.totalCount}`
-                  : `No available events`}
-              </Heading>
-            </Skeleton>
+            <Heading size={'md'}>
+              {data?.eventMany?.totalCount && data.eventMany.totalCount > 0
+                ? `Search results: ${data?.eventMany?.totalCount}`
+                : `No available events`}
+            </Heading>
             {loading && <Spinner size={'sm'} />}
           </Flex>
 

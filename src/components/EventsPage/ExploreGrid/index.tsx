@@ -1,8 +1,7 @@
 import { SimpleGrid, GridItem, SimpleGridProps, Button, VStack, Spinner, Box } from '@chakra-ui/react';
-import { EventManyQuery, EventManyQueryVariables } from '../../../generated/graphql';
+import { EventManyQueryVariables } from '../../../generated/graphql';
 import ExploreCard from './ExploreCard';
 import { InView } from 'react-intersection-observer';
-import { ApolloQueryResult } from '@apollo/client';
 import { EventManyArray } from '../types';
 
 type Props = {

@@ -9,7 +9,7 @@ export const CATEGORY_EMOJI: CategoriesType = {
   BEAUTY: '✨',
   EDUCATION: '📚',
   COMEDY: '🎭',
-  FOOD: '✈️',
+  FOOD: '🍔',
   SHOPPING: '🛍️',
   OTHER: '🚀',
 };

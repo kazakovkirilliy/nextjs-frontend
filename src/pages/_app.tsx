@@ -12,6 +12,7 @@ import { Global, css } from '@emotion/react';
 import Script from 'next/script';
 import Layout from '../components/Layout';
 import { theme } from '../../styles/theme';
+import Head from 'next/head';
 
 const GlobalStyles = css`
   /*
@@ -33,6 +34,12 @@ function MyApp({ Component, pageProps }: AppProps) {
 
   return (
     <>
+      <Head>
+        <title>Potka</title>
+        <meta charSet="utf-8" />
+        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+        <link rel="shortcut icon" href="favico.ico" />
+      </Head>
       <Script
         src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.0/mapbox-gl-geocoder.min.js"
         strategy="lazyOnload"

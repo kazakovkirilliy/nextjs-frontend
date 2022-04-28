@@ -17,14 +17,14 @@ export const APOLLO_STATE_PROP_NAME = '__APOLLO_STATE__';
 let apolloClient: any;
 
 const httpLink = new HttpLink({
-  uri: 'https://potkame.herokuapp.com/graphql', // Server URL (must be absolute)
+  uri: process.env.BACKEND_URL_HTTP, // Server URL (must be absolute)
   credentials: 'include', // Additional fetch() options like `credentials` or `headers`
 });
 
 const wsLink = new GraphQLWsLink(
   createClient({
     webSocketImpl: ws,
-    url: 'wss://potkame.herokuapp.com/graphql',
+    url: process.env.BACKEND_URL_WS!,
   })
 );
 

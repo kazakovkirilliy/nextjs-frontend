@@ -30,14 +30,14 @@ export default function Header() {
   return (
     <Box>
       <Flex
-        bg={useColorModeValue('white', 'gray.800')}
-        color={useColorModeValue('gray.600', 'white')}
+        bg={'white'}
+        color={'gray.600'}
         height={'8vh'}
         py={{ base: 2 }}
         px={{ base: 4, md: 10 }}
         borderBottom={1}
         borderStyle={'solid'}
-        borderColor={useColorModeValue('gray.200', 'gray.900')}
+        borderColor={'gray.200'}
         align={'center'}
       >
         <Flex flex={{ base: 1, md: 'auto' }} ml={{ base: -2 }} display={{ base: 'flex', md: 'none' }}>
