@@ -1,14 +1,23 @@
-import { Center, Flex, Heading, Skeleton, Spinner, Tag, Text } from '@chakra-ui/react';
+import { Center, Flex, Heading, Spinner } from '@chakra-ui/react';
 import type { NextPage } from 'next';
 import dynamic from 'next/dynamic';
 import { useState, useEffect } from 'react';
-import EventsForm from '../../components/EventsPage/EventsForm';
-import EventsGrid from '../../components/EventsPage/ExploreGrid';
-import ModalAllowLocation from '../../components/EventsPage/ModalAllowLocation';
 import { EventManyDocument, useEventManyLazyQuery } from '../../generated/graphql';
 import { initializeApollo, addApolloState } from '../../lib/apolloClient';
 
 const ExploreMap = dynamic(() => import('../../components/EventsPage/ExploreMap'), {
+  ssr: false,
+});
+
+const EventsGrid = dynamic(() => import('../../components/EventsPage/ExploreGrid'), {
+  ssr: false,
+});
+
+const EventsForm = dynamic(() => import('../../components/EventsPage/EventsForm'), {
+  ssr: false,
+});
+
+const ModalAllowLocation = dynamic(() => import('../../components/EventsPage/ModalAllowLocation'), {
   ssr: false,
 });
 

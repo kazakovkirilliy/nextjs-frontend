@@ -1,4 +1,4 @@
-import { Flex, FormLabel, Heading, InputGroup, VStack } from '@chakra-ui/react';
+import { Flex, Heading, VStack } from '@chakra-ui/react';
 import { useForm } from 'react-hook-form';
 import PrimaryButton from '../../../base/PrimaryButton';
 import { FormInput } from '../../../Form/FormInput';
@@ -6,7 +6,7 @@ import { CreateEventFormFields, useCreateEventStore } from '../../useCreateEvent
 import shallow from 'zustand/shallow';
 import { useRouter } from 'next/router';
 import { FormSelect } from '../../../Form/FormSelect';
-import { CATEGORIES, CATEGORY_OPTIONS, OptionType } from '../../../../lib/constants';
+import { CATEGORY_OPTIONS } from '../../../../lib/constants';
 
 export type StepGeneralInput = Pick<CreateEventFormFields, 'title' | 'description' | 'category'>;
 

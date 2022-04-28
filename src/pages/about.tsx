@@ -1,9 +1,7 @@
 import { Heading, VStack, Text } from '@chakra-ui/react';
 import Footer from '../components/Layout/Footer';
 
-type Props = {};
-
-export default function About(props: Props) {
+export default function About() {
   return (
     <>
       <VStack px={{ base: 2, md: '10%', lg: '25%' }} mt={{ base: 5, md: 10, lg: 20 }} spacing={10}>

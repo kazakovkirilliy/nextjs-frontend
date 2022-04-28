@@ -1,5 +1,4 @@
-import { gql, useSubscription } from '@apollo/client';
-import { Avatar, Badge, Box, Center, Flex, Heading, Text } from '@chakra-ui/react';
+import { Flex } from '@chakra-ui/react';
 import { Event } from '../../../generated/graphql';
 import EventContent from './EventContent';
 import EventSideInfo from './EventSideInfo';

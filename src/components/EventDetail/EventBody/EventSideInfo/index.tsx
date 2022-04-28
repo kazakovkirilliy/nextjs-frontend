@@ -1,10 +1,12 @@
-import { Flex, Box, Text, Link, VStack, Avatar, Heading } from '@chakra-ui/react';
+import { Flex, Box, Text, Link, VStack, Avatar } from '@chakra-ui/react';
 import { HiOutlineCalendar } from 'react-icons/hi';
 import { formatIsoDate, formatIsoTime } from '../../../../lib/utils/formatDateTime';
 import NextLink from 'next/link';
 import NextImage from 'next/image';
 import { Event, useUserOneQuery } from '../../../../generated/graphql';
-import StaticMap from './StaticMap';
+import dynamic from 'next/dynamic';
+
+const StaticMap = dynamic(() => import('./StaticMap'), { ssr: false });
 
 type Props = Pick<Event, 'longitude' | 'latitude' | 'address' | 'dateFrom' | 'dateTo' | 'authorUsername'> & {
   isSticky?: boolean;

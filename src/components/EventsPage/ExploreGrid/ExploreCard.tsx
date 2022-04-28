@@ -1,11 +1,10 @@
-import { Box, Center, Flex, Heading, LinkBox, LinkOverlay, SimpleGrid, Tag, Text } from '@chakra-ui/react';
-import { Category, Event, Maybe, useMeQuery, User } from '../../../generated/graphql';
+import { Box, Center, Flex, Heading, LinkBox, LinkOverlay, SimpleGrid, Text } from '@chakra-ui/react';
+import { Event } from '../../../generated/graphql';
 import NextLink from 'next/link';
 import NextImage from 'next/image';
 import { formatIsoDate, formatIsoTime } from '../../../lib/utils/formatDateTime';
 import { HiOutlineCalendar, HiOutlineLocationMarker, HiPhotograph } from 'react-icons/hi';
 import AdditionalInfo from './ExploreCard/AdditionalInfo';
-import { useEffect, useState } from 'react';
 
 type Props = Pick<Event, 'id' | 'imageUrl' | 'title' | 'description' | 'dateFrom' | 'address' | 'category'>;
 
@@ -25,7 +24,6 @@ export default function ExploreCard(props: Props) {
       id={props.id}
     >
       <LinkBox position={'relative'} top={0} cursor={'pointer'} data-peer>
-        {/* Image */}
         <Center height={200} width={'auto'} position={'relative'} bg={'gray.200'}>
           {props.imageUrl && <NextImage src={props.imageUrl} layout={'fill'} objectFit={'cover'} />}
 

@@ -1,4 +1,4 @@
-import { SimpleGrid, GridItem, SimpleGridProps, Button, VStack, Spinner, Box } from '@chakra-ui/react';
+import { SimpleGrid, GridItem, VStack, Box } from '@chakra-ui/react';
 import { EventManyQueryVariables } from '../../../generated/graphql';
 import ExploreCard from './ExploreCard';
 import { InView } from 'react-intersection-observer';
@@ -9,14 +9,14 @@ type Props = {
   refetch?: (vars?: EventManyQueryVariables) => void;
   loading?: boolean;
   hasNext?: boolean;
-} & SimpleGridProps;
+  columns?: Record<string, any>;
+};
 
 const baseGridLayout = { base: 1, sm: 2, md: 4 };
 
 export default function ExploreGrid({ events, columns, refetch, loading, hasNext, ...rest }: Props) {
   return (
     <SimpleGrid
-      {...rest}
       columns={columns || baseGridLayout}
       height={'auto'}
       overflowX={'hidden'}

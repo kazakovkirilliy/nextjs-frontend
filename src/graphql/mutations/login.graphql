@@ -1,7 +1,3 @@
 mutation Login($data: LoginUserInput!) {
-  login(loginUserInput: $data) {
-    name
-    username
-    imageUrl
-  }
+  login(loginUserInput: $data)
 }

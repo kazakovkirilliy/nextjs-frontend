@@ -12,7 +12,6 @@ import {
 } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import { HiBookmark, HiCollection, HiLogout } from 'react-icons/hi';
-import { useLogoutMutation } from '../../../generated/graphql';
 
 type Props = {
   name: string;
@@ -23,7 +22,6 @@ type Props = {
 export default function UserSection(props: Props) {
   const { name, username, imageUrl } = props;
 
-  const [logout] = useLogoutMutation();
   const router = useRouter();
 
   return (
@@ -84,7 +82,6 @@ export default function UserSection(props: Props) {
               gap={2}
               fontWeight={'normal'}
               onClick={() => {
-                logout();
                 router.reload();
               }}
             >

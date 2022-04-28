@@ -1,7 +1,6 @@
-import { Avatar, Badge, Box, Center, Flex, Heading, Text } from '@chakra-ui/react';
-import { Maybe, Event, useEnrollmentRequestedSubscription } from '../../../generated/graphql';
+import { Box, Center, Flex, Heading, Text } from '@chakra-ui/react';
+import { Event } from '../../../generated/graphql';
 import NextImage from 'next/image';
-import { gql, useSubscription } from '@apollo/client';
 import { HiPhotograph } from 'react-icons/hi';
 
 type Props = Pick<Event, 'description' | 'imageUrl'>;

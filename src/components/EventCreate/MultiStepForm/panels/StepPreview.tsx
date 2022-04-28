@@ -1,8 +1,10 @@
 import { Heading, VStack, Text, Flex } from '@chakra-ui/react';
+import dynamic from 'next/dynamic';
 import { useMeQuery } from '../../../../generated/graphql';
-import EventContent from '../../../EventDetail/EventBody/EventContent';
-import EventSideInfo from '../../../EventDetail/EventBody/EventSideInfo';
 import { useCreateEventStore } from '../../useCreateEventStore';
+
+const EventContent = dynamic(() => import('../../../EventDetail/EventBody/EventContent'), { ssr: false });
+const EventSideInfo = dynamic(() => import('../../../EventDetail/EventBody/EventSideInfo'), { ssr: false });
 
 export default function StepPreview() {
   const { data } = useMeQuery();

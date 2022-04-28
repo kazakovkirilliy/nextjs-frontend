@@ -1,12 +1,9 @@
-import { Box, Button, Flex, Heading, Text } from '@chakra-ui/react';
-import PrimaryButton from '../components/base/PrimaryButton';
+import { Box, Button, Heading, Text } from '@chakra-ui/react';
 import Footer from '../components/Layout/Footer';
 import { MdExplore } from 'react-icons/md';
 import { useRouter } from 'next/router';
 
-type Props = {};
-
-export default function Custom404(props: Props) {
+export default function Custom404() {
   const router = useRouter();
   return (
     <>

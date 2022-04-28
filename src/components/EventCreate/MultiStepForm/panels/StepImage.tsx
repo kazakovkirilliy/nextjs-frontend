@@ -1,23 +1,15 @@
-import {
-  Button,
-  Center,
-  Flex,
-  Heading,
-  InputGroup,
-  VStack,
-  Text,
-  Box,
-} from '@chakra-ui/react';
-import _ from 'lodash';
+import { Button, Center, Flex, Heading, InputGroup, VStack, Text, Box } from '@chakra-ui/react';
+import dynamic from 'next/dynamic';
 
 import NextImage from 'next/image';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 
-import Dropzone from 'react-dropzone';
 import { HiOutlineCloudUpload } from 'react-icons/hi';
 import PrimaryButton from '../../../base/PrimaryButton';
 import { useCreateEventStore } from '../../useCreateEventStore';
+
+const Dropzone = dynamic(() => import('react-dropzone'), { ssr: false });
 
 const MAX_FILE_SIZE = 3000000; // in bytes
 
@@ -48,38 +40,18 @@ export default function StepImage() {
         </Text>
       )}
       {uploadedFile && (
-        <Flex
-          width={'auto'}
-          gap={4}
-          rounded={'md'}
-          shadow={'md'}
-          p={2}
-          zIndex={-1}
-          userSelect={'none'}
-        >
-          <NextImage
-            src={URL.createObjectURL(uploadedFile)}
-            width={30}
-            height={30}
-            objectFit={'cover'}
-          />
+        <Flex width={'auto'} gap={4} rounded={'md'} shadow={'md'} p={2} zIndex={-1} userSelect={'none'}>
+          <NextImage src={URL.createObjectURL(uploadedFile)} width={30} height={30} objectFit={'cover'} />
           <Box>
             <Heading as={'h3'} size={'sm'}>
               {uploadedFile.name}
             </Heading>
-            <Text fontSize={'xs'}>
-              {Math.floor(uploadedFile.size / 1000)} Kb
-            </Text>
+            <Text fontSize={'xs'}>{Math.floor(uploadedFile.size / 1000)} Kb</Text>
           </Box>
         </Flex>
       )}
 
-      <Dropzone
-        onDrop={onDrop}
-        maxFiles={1}
-        maxSize={MAX_FILE_SIZE}
-        accept={['image/jpeg', 'image/png']}
-      >
+      <Dropzone onDrop={onDrop} maxFiles={1} maxSize={MAX_FILE_SIZE} accept={['image/jpeg', 'image/png']}>
         {({ getRootProps, getInputProps }) => (
           <InputGroup size="md">
             <Center
@@ -106,10 +78,7 @@ export default function StepImage() {
           Previous
         </Button>
 
-        <PrimaryButton
-          alignSelf={'flex-end'}
-          onClick={() => router.push('./preview')}
-        >
+        <PrimaryButton alignSelf={'flex-end'} onClick={() => router.push('./preview')}>
           Next
         </PrimaryButton>
       </Flex>
