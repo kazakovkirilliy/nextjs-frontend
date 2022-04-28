@@ -81,7 +81,9 @@ export default function UserSection(props: Props) {
               display={'flex'}
               gap={2}
               fontWeight={'normal'}
-              onClick={() => {
+              onClick={async () => {
+                const setCookie = (await import('../../../lib/utils/setCookie')).default;
+                setCookie('uid', '', 0);
                 router.reload();
               }}
             >
