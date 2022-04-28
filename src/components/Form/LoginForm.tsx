@@ -1,17 +1,15 @@
-import { useDisclosure, VStack, InputRightElement, IconButton, Button, Text } from '@chakra-ui/react';
+import { VStack, Button, Text } from '@chakra-ui/react';
 import { GraphQLError } from 'graphql';
+import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
-import { HiEyeOff, HiEye, HiCheckCircle } from 'react-icons/hi';
+import { HiCheckCircle } from 'react-icons/hi';
 import { LoginMutationVariables, useLoginMutation, MeDocument } from '../../generated/graphql';
-import PrimaryButton from '../base/PrimaryButton';
 import { FormInput } from './FormInput';
 import { FormPasswordInput } from './FormPasswordInput';
 
-type Props = {};
-
-export default function LoginForm(props: Props) {
+export default function LoginForm() {
   const router = useRouter();
   const [errorMessage, setErrorMessage] = useState('');
 
@@ -21,15 +19,19 @@ export default function LoginForm(props: Props) {
     formState: { errors, isSubmitting },
   } = useForm<LoginMutationVariables['data']>();
 
-  const [loginUser, { loading, error, data }] = useLoginMutation({ refetchQueries: [MeDocument, 'me'] });
+  const [loginUser, { data }] = useLoginMutation({ refetchQueries: [MeDocument, 'me'] });
 
   const onSubmit: SubmitHandler<LoginMutationVariables['data']> = async (data) => {
     await loginUser({ variables: { data } })
       .catch((e: GraphQLError) => setErrorMessage(e.message))
-      .then((res) => {
-        if (res) {
-          console.log(res);
+      .then(async (res) => {
+        if (res && res.data?.login) {
+          const setCookie = (await import('../../lib/utils/setCookie')).default; // optimize bundle -> https://nextjs.org/docs/advanced-features/dynamic-import
+          setCookie('uid', res.data.login, 1);
+          // localStorage.setItem('uid', res.data.login);
           router.push('/');
+        } else {
+          setErrorMessage('Unknown error ocured');
         }
       });
   };

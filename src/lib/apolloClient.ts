@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { ApolloClient, HttpLink, InMemoryCache, split } from '@apollo/client';
+import { ApolloClient, ApolloLink, concat, from, HttpLink, InMemoryCache, split } from '@apollo/client';
 import merge from 'deepmerge';
 import isEqual from 'lodash/isEqual';
 import { GraphQLWsLink } from '@apollo/client/link/subscriptions';
@@ -11,6 +11,7 @@ import {
   relayStylePagination,
 } from '@apollo/client/utilities';
 import ws from 'isomorphic-ws';
+import { setContext } from '@apollo/client/link/context';
 
 export const APOLLO_STATE_PROP_NAME = '__APOLLO_STATE__';
 
@@ -37,10 +38,26 @@ const splitLink = split(
   httpLink
 );
 
+const authMiddleware = new ApolloLink((operation, forward) => {
+  let jwt: string | null = null;
+  if (typeof window !== 'undefined' && getCookie('uid')) {
+    jwt = `Bearer ${getCookie('uid')}`;
+  }
+  // add the authorization to the headers
+  operation.setContext(({ headers = {} }) => ({
+    headers: {
+      ...headers,
+      authorization: jwt,
+    },
+  }));
+
+  return forward(operation);
+});
+
 function createApolloClient() {
   return new ApolloClient({
     ssrMode: typeof window === 'undefined',
-    link: splitLink,
+    link: concat(authMiddleware, splitLink),
     cache: new InMemoryCache(),
   });
 }
@@ -86,4 +103,21 @@ export function useApollo(pageProps: any) {
   const state = pageProps[APOLLO_STATE_PROP_NAME];
   const store = useMemo(() => initializeApollo(state), [state]);
   return store;
+}
+
+// https://www.w3schools.com/js/js_cookies.asp
+function getCookie(cname: string) {
+  let name = cname + '=';
+  let decodedCookie = decodeURIComponent(document.cookie);
+  let ca = decodedCookie.split(';');
+  for (let i = 0; i < ca.length; i++) {
+    let c = ca[i];
+    while (c.charAt(0) == ' ') {
+      c = c.substring(1);
+    }
+    if (c.indexOf(name) == 0) {
+      return c.substring(name.length, c.length);
+    }
+  }
+  return '';
 }

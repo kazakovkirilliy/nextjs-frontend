@@ -45,10 +45,14 @@ export default function RegistrationForm(props: Props) {
   const onSubmit: SubmitHandler<RegisterMutationVariables['data']> = async (data) => {
     await registerUser({ variables: { data } })
       .catch((e: GraphQLError) => setErrorMessage(e.message))
-      .then((res) => {
-        if (res) {
-          console.log(res);
+      .then(async (res) => {
+        if (res && res.data?.register) {
+          const setCookie = (await import('../../lib/utils/setCookie')).default;
+          setCookie('uid', res.data.register, 1);
+          // localStorage.setItem('uid', res.data.register);
           router.push('/');
+        } else {
+          setErrorMessage('Unknown error ocured');
         }
       });
   };
