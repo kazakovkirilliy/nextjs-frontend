@@ -1,9 +1,6 @@
 import {
-  Box,
   Button,
-  Center,
-  Flex,
-  Heading,
+  Center, Heading,
   Modal,
   ModalBody,
   ModalContent,
@@ -11,15 +8,13 @@ import {
   ModalOverlay,
   Text,
   useDisclosure,
-  VStack,
+  VStack
 } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { HiLocationMarker } from 'react-icons/hi';
 import { geocodeReverse } from '../../lib/utils/geocodeReverse';
 import {
-  LOCATION_DECLINED,
-  USER_LOCATION,
-  parseUserLocationFromStorage,
+  LOCATION_DECLINED, parseUserLocationFromStorage, USER_LOCATION
 } from '../../lib/utils/parseUserLocationFromStorage';
 
 export default function ModalAllowLocation() {

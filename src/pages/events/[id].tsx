@@ -1,14 +1,13 @@
 import { Box, Flex, Heading, Text } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
-import EventBody from '../../components/EventDetail/EventBody';
 import EventContent from '../../components/EventDetail/EventBody/EventContent';
 import EventSideInfo from '../../components/EventDetail/EventBody/EventSideInfo';
 import EventHeader from '../../components/EventDetail/EventHeader';
 import Footer from '../../components/Layout/Footer';
-import { EventOneDocument, useEventOneQuery, useMeQuery } from '../../generated/graphql';
+import { EventOneDocument, useEventOneQuery } from '../../generated/graphql';
 import { addApolloState, initializeApollo } from '../../lib/apolloClient';
 
-export default function EventPage(props: any) {
+export default function EventPage() {
   const router = useRouter();
   const eventId = typeof router.query.id === 'string' ? router.query.id : '';
   const { data, loading } = useEventOneQuery({ variables: { id: eventId } });
@@ -17,11 +16,11 @@ export default function EventPage(props: any) {
   if (loading) {
   } else if (!data || !data.eventOne) {
   } else {
-    const { title, dateFrom, description, imageUrl, authorUsername, participants, ...sideInfoProps } = data.eventOne;
+    const { title, description, imageUrl, authorUsername, participants, ...sideInfoProps } = data.eventOne;
     body = (
       <>
         <Flex direction={'column'} flex={1}>
-          <EventHeader title={title} dateFrom={dateFrom} authorUsername={authorUsername} />
+          <EventHeader title={title} authorUsername={authorUsername} />
           <Flex
             gap={5}
             mt={8}
@@ -32,7 +31,7 @@ export default function EventPage(props: any) {
             direction={{ base: 'column', xl: 'row' }}
           >
             <EventContent description={description} imageUrl={imageUrl} />
-            <EventSideInfo {...sideInfoProps} dateFrom={dateFrom} authorUsername={authorUsername} />
+            <EventSideInfo {...sideInfoProps} authorUsername={authorUsername} />
             <Box display={{ xl: 'none' }}>
               <Heading size={'md'} mb={4}>
                 Details
@@ -40,7 +39,7 @@ export default function EventPage(props: any) {
               <Text wordBreak={'break-word'}>{description}</Text>
             </Box>
           </Flex>
-        </Flex>{' '}
+        </Flex>
         <Footer />
       </>
     );

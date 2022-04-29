@@ -1,8 +1,8 @@
-import { Flex, Box, Text, Link } from '@chakra-ui/react';
-import { Event } from '../../../generated/graphql';
+import { Box, Flex, Link, Text } from '@chakra-ui/react';
 import NextImage from 'next/image';
 import NextLink from 'next/link';
 import { useRouter } from 'next/router';
+import { Event } from '../../../generated/graphql';
 
 type Props = Pick<Event, 'id' | 'imageUrl' | 'title'>;
 

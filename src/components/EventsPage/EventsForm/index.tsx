@@ -1,0 +1,157 @@
+import { QueryLazyOptions } from '@apollo/client';
+import { Flex, IconButton, InputLeftElement } from '@chakra-ui/react';
+import dynamic from 'next/dynamic';
+import { useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { HiChevronDoubleUp, HiOutlineFilter, HiOutlineSearch } from 'react-icons/hi';
+import { Category, EventManyQueryVariables, useEventManyCitiesQuery } from '../../../generated/graphql';
+import { CATEGORY_OPTIONS, OptionType } from '../../../lib/constants';
+import { parseUserLocationFromStorage } from '../../../lib/utils/parseUserLocationFromStorage';
+import { EVENT_FETCH_LIMIT } from '../../../pages/events';
+import PrimaryButton from '../../base/PrimaryButton';
+import { FormInput } from '../../Form/FormInput';
+import { FormSelect } from '../../Form/FormSelect';
+import DateTime from './DateTime';
+
+const SearchResults = dynamic(() => import('./SearchResults'), { ssr: false });
+
+type Props = {
+  fetch: (options?: QueryLazyOptions<EventManyQueryVariables>) => void;
+  refetch: (variables?: EventManyQueryVariables) => void;
+};
+
+export type FormPayloadType = {
+  search?: string;
+  category?: Category;
+  dateFrom?: string;
+  dateTo?: string;
+  city?: string;
+};
+
+export default function EventsForm({ fetch, refetch }: Props) {
+  const [filtersShown, setFiltersShown] = useState(false);
+  const [cityOptions, setCityOptions] = useState<OptionType[]>([]);
+  const { data, loading } = useEventManyCitiesQuery();
+  const userCity = parseUserLocationFromStorage()?.city;
+  const [currentPayload, setCurrentPayload] = useState<FormPayloadType>({});
+
+  useEffect(() => {
+    if (data?.eventManyCities) {
+      const options = data.eventManyCities.map((city) => ({
+        label: city,
+        value: city,
+      }));
+
+      setCityOptions(options);
+    }
+  }, [data?.eventManyCities]);
+
+  const { watch, control, register, handleSubmit, setValue } = useForm<FormPayloadType>();
+
+  const formValues = watch();
+
+  useEffect(() => {
+    const variables: EventManyQueryVariables = { pagination: { take: EVENT_FETCH_LIMIT } };
+
+    if (cityOptions.length === 0) {
+      return;
+    }
+
+    if (userCity && cityOptions.find((o) => o.value === userCity)) {
+      fetch({
+        variables: { ...variables, filters: { field: 'city', value: userCity } },
+      });
+    } else {
+      fetch({ variables });
+    }
+  }, [cityOptions, fetch, userCity]);
+
+  const onSubmit = async (data: FormPayloadType) => {
+    const variables: EventManyQueryVariables = { search: null, date: null, filters: null };
+    if (data.search) {
+      variables.search = { field: 'title', value: data.search };
+    }
+
+    if (data.category) {
+      variables.filters = { field: 'category', value: data.category };
+    }
+
+    if (data.city) {
+      variables.filters =
+        variables.filters && !Array.isArray(variables.filters)
+          ? [variables.filters, { field: 'city', value: data.city }]
+          : { field: 'city', value: data.city };
+    }
+
+    if (data.dateFrom || data.dateTo) {
+      variables.date = {
+        field: 'dateFrom', // events starting between <data.dateFrom> and <data.dateTo>
+        value: {
+          gte: data.dateFrom || undefined,
+          lt: data.dateTo || undefined,
+        },
+      };
+    }
+
+    setCurrentPayload(data);
+    refetch(variables);
+  };
+
+  const appliedFilters = Object.values(currentPayload).filter((v) => v && v !== '');
+
+  return (
+    <Flex as={'form'} flexDirection={'column'} width={'full'} onSubmit={handleSubmit(onSubmit)} gap={4} zIndex={5}>
+      <Flex gap={4}>
+        <FormInput name="search" register={register} placeholder={'Search'} isRequired>
+          <InputLeftElement color={'gray.400'}>
+            <HiOutlineSearch />
+          </InputLeftElement>
+        </FormInput>
+        <IconButton
+          icon={filtersShown ? <HiChevronDoubleUp /> : <HiOutlineFilter />}
+          aria-label={'Search filters'}
+          onClick={() => setFiltersShown((prev) => !prev)}
+          bg={'primary'}
+          color={'white'}
+          _hover={{ bg: 'hprimary' }}
+        />
+      </Flex>
+
+      {filtersShown && (
+        <Flex direction={{ base: 'column', md: 'row' }} gap={{ base: 4 }} alignItems={'center'}>
+          <Flex zIndex={10} width={'100%'} justifyItems={'stretch'} gap={4}>
+            <FormSelect
+              name={'city'}
+              control={control}
+              options={cityOptions}
+              placeholder={'City'}
+              width={'100%'}
+              defaultSelectValue={userCity ? { label: userCity, value: userCity } : undefined}
+              isLoading={loading}
+            />
+            <FormSelect
+              name={'category'}
+              control={control}
+              options={CATEGORY_OPTIONS}
+              placeholder={'Category'}
+              width={'100%'}
+              isClearable
+            />
+            <DateTime
+              register={register}
+              setValue={setValue}
+              dateFrom={formValues.dateFrom}
+              dateTo={formValues.dateTo}
+            />
+          </Flex>
+
+          <PrimaryButton px={6} type={'submit'}>
+            Apply filters
+          </PrimaryButton>
+        </Flex>
+      )}
+
+      <SearchResults currentPayload={currentPayload} filterCount={appliedFilters.length} userCity={userCity} />
+    </Flex>
+  );
+}

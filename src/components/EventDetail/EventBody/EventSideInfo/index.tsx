@@ -1,10 +1,9 @@
-import { Flex, Box, Text, Link, VStack, Avatar } from '@chakra-ui/react';
-import { HiOutlineCalendar } from 'react-icons/hi';
-import { formatIsoDate, formatIsoTime } from '../../../../lib/utils/formatDateTime';
-import NextLink from 'next/link';
-import NextImage from 'next/image';
-import { Event, useUserOneQuery } from '../../../../generated/graphql';
+import { Avatar, Box, Flex, Text, VStack } from '@chakra-ui/react';
+import { format } from 'date-fns';
 import dynamic from 'next/dynamic';
+import NextImage from 'next/image';
+import { HiOutlineCalendar } from 'react-icons/hi';
+import { Event, useUserOneQuery } from '../../../../generated/graphql';
 
 const StaticMap = dynamic(() => import('./StaticMap'), { ssr: false });
 
@@ -45,9 +44,7 @@ export default function EventSideInfo({
             <Avatar size={'md'} />
           )}
           <Box ml="3">
-            <NextLink href={`/users/${authorUsername}`} passHref>
-              <Link>{data?.user.name}</Link>
-            </NextLink>
+            <Text fontSize={'lg'}>{data?.user.name}</Text>
             <Text fontSize="sm">@{authorUsername}</Text>
           </Box>
         </Flex>
@@ -65,14 +62,8 @@ export default function EventSideInfo({
               {dateTo && <Text>End:</Text>}
             </Box>
             <Box>
-              <Text>
-                {formatIsoDate(dateFrom)}, {formatIsoTime(dateFrom)}
-              </Text>
-              {dateTo && (
-                <Text>
-                  {formatIsoDate(dateTo)}, {formatIsoTime(dateTo)}
-                </Text>
-              )}
+              <Text>{format(new Date(dateFrom), 'PPpp')}</Text>
+              {dateTo && <Text>{format(new Date(dateTo), 'PPpp')}</Text>}
             </Box>
           </Flex>
         </VStack>

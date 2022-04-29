@@ -1,6 +1,5 @@
-import { Flex, Tag, IconButton } from '@chakra-ui/react';
-import { HiHeart, HiOutlineHeart } from 'react-icons/hi';
-import { Category, useSaveEventMutation } from '../../../../generated/graphql';
+import { Flex, Tag } from '@chakra-ui/react';
+import { Category } from '../../../../generated/graphql';
 import { CATEGORIES } from '../../../../lib/constants';
 
 type Props = { category: Category; eventId: string };

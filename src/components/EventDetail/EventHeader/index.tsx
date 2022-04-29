@@ -1,15 +1,6 @@
-import { Box, Button, Flex, Heading, IconButton, Link, Text } from '@chakra-ui/react';
-import {
-  HiBookmark,
-  HiCheck,
-  HiHeart,
-  HiLockClosed,
-  HiOutlineBookmark,
-  HiOutlineHeart,
-  HiOutlineReply,
-} from 'react-icons/hi';
+import { Button, Flex, Heading, IconButton, Link, Text } from '@chakra-ui/react';
+import { HiBookmark, HiLockClosed, HiOutlineBookmark, HiOutlineReply } from 'react-icons/hi';
 import NextLink from 'next/link';
-import { formatIsoDate } from '../../../lib/utils/formatDateTime';
 import SubHeader from '../../Layout/Header/SubHeader';
 import {
   EnrollmentRequestOneDocument,
@@ -27,12 +18,11 @@ import EnrollmentRequestState from './EnrollmentRequestState';
 
 type Props = {
   title: string;
-  dateFrom: string;
   authorUsername: string;
   isSticky?: boolean;
 };
 
-export default function EventHeader({ title, dateFrom, authorUsername }: Props) {
+export default function EventHeader({ title, authorUsername }: Props) {
   const router = useRouter();
   const eventId = typeof router.query.id === 'string' ? router.query.id : '';
   const { data: dataMe } = useMeQuery();
@@ -75,7 +65,6 @@ export default function EventHeader({ title, dateFrom, authorUsername }: Props) 
           </NextLink>
           <Flex direction={{ base: 'row', md: 'column' }} flex={1} justify={'space-between'}>
             <Heading size={'md'}>{title}</Heading>
-            <Text>{formatIsoDate(dateFrom)}</Text>
           </Flex>
         </Flex>
 

@@ -1,9 +1,9 @@
 import { Box, Center, Flex, Heading, LinkBox, LinkOverlay, SimpleGrid, Text } from '@chakra-ui/react';
-import { Event } from '../../../generated/graphql';
-import NextLink from 'next/link';
+import { format } from 'date-fns';
 import NextImage from 'next/image';
-import { formatIsoDate, formatIsoTime } from '../../../lib/utils/formatDateTime';
+import NextLink from 'next/link';
 import { HiOutlineCalendar, HiOutlineLocationMarker, HiPhotograph } from 'react-icons/hi';
+import { Event } from '../../../generated/graphql';
 import AdditionalInfo from './ExploreCard/AdditionalInfo';
 
 type Props = Pick<Event, 'id' | 'imageUrl' | 'title' | 'description' | 'dateFrom' | 'address' | 'category'>;
@@ -57,7 +57,7 @@ export default function ExploreCard(props: Props) {
             <SimpleGrid gap={2} gridTemplateColumns={'10% 90%'}>
               <HiOutlineCalendar />
               <Text alignItems={'center'} fontSize={'xs'} noOfLines={1}>
-                {`${formatIsoTime(props.dateFrom)}, ${formatIsoDate(props.dateFrom)}`}
+                {`${format(new Date(props.dateFrom), 'PPpp')}`}
               </Text>
             </SimpleGrid>
             {props.address && (

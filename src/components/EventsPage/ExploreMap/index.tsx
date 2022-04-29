@@ -1,20 +1,15 @@
-import 'mapbox-gl/dist/mapbox-gl.css';
-
-import React, { useEffect, useRef, useState } from 'react';
-import ReactMapGl, { Marker, Popup, GeolocateControl, MapRef } from 'react-map-gl';
+import { usePrevious } from '@chakra-ui/react';
 import { getCenter } from 'geolib';
 import { GeolibInputCoordinates } from 'geolib/es/types';
-import MarkerIcon from '../../Maps/MarkerIcon';
-import { EventManyType } from '../../../lib/types';
-
-import ExploreCardPopup from './ExploreCardPopup';
+import 'mapbox-gl/dist/mapbox-gl.css';
 import NextImage from 'next/image';
-import { Center, usePrevious } from '@chakra-ui/react';
-import _ from 'lodash';
-import { EventManyQuery, Event } from '../../../generated/graphql';
-import { USER_LOCATION } from '../../../lib/utils/parseUserLocationFromStorage';
-import { EventManyArray } from '../types';
+import React, { useEffect, useRef, useState } from 'react';
+import ReactMapGl, { GeolocateControl, MapRef, Marker, Popup } from 'react-map-gl';
+import { Event } from '../../../generated/graphql';
 import { areEqual } from '../../../lib/utils/areEqual';
+import MarkerIcon from '../../Maps/MarkerIcon';
+import { EventManyArray } from '../types';
+import ExploreCardPopup from './ExploreCardPopup';
 
 type Props = {
   events: EventManyArray;

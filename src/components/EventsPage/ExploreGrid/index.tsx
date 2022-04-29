@@ -1,8 +1,8 @@
-import { SimpleGrid, GridItem, VStack, Box } from '@chakra-ui/react';
-import { EventManyQueryVariables } from '../../../generated/graphql';
-import ExploreCard from './ExploreCard';
+import { Box, GridItem, SimpleGrid, VStack } from '@chakra-ui/react';
 import { InView } from 'react-intersection-observer';
+import { EventManyQueryVariables } from '../../../generated/graphql';
 import { EventManyArray } from '../types';
+import ExploreCard from './ExploreCard';
 
 type Props = {
   events: EventManyArray;

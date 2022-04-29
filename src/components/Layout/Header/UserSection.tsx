@@ -1,14 +1,14 @@
 import {
   Avatar,
-  Text,
+  Button,
   Flex,
   Popover,
   PopoverBody,
   PopoverContent,
+  PopoverFooter,
   PopoverHeader,
   PopoverTrigger,
-  Button,
-  PopoverFooter,
+  Text,
 } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import { HiBookmark, HiCollection, HiLogout } from 'react-icons/hi';

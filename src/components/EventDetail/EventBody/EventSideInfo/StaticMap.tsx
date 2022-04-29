@@ -11,7 +11,7 @@ export default function StaticMap({ address, longitude, latitude }: Props) {
   };
 
   const mapParams = {
-    width: 300,
+    width: 350,
     height: 200,
     markerColor: 'ed65a6',
   };
