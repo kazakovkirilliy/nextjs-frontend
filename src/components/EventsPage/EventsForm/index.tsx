@@ -111,9 +111,14 @@ export default function EventsForm({ fetch, refetch }: Props) {
           icon={filtersShown ? <HiChevronDoubleUp /> : <HiOutlineFilter />}
           aria-label={'Search filters'}
           onClick={() => setFiltersShown((prev) => !prev)}
-          bg={'primary'}
-          color={'white'}
-          _hover={{ bg: 'hprimary' }}
+          bg={appliedFilters.length > 0 ? 'primary' : 'gray.200'}
+          color={appliedFilters.length > 0 ? 'white' : 'gray.700'}
+          _hover={{
+            bg: appliedFilters.length > 0 ? 'hprimary' : 'gray.100',
+          }}
+          _active={{
+            bg: appliedFilters.length > 0 ? 'hprimary' : 'gray.100',
+          }}
         />
       </Flex>
 
@@ -137,15 +142,10 @@ export default function EventsForm({ fetch, refetch }: Props) {
               width={'100%'}
               isClearable
             />
-            <DateTime
-              register={register}
-              setValue={setValue}
-              dateFrom={formValues.dateFrom}
-              dateTo={formValues.dateTo}
-            />
           </Flex>
+          <DateTime register={register} setValue={setValue} dateFrom={formValues.dateFrom} dateTo={formValues.dateTo} />
 
-          <PrimaryButton px={6} type={'submit'}>
+          <PrimaryButton px={10} type={'submit'} width={'min-content'}>
             Apply filters
           </PrimaryButton>
         </Flex>
