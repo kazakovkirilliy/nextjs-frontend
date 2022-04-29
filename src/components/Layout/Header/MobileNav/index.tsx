@@ -25,6 +25,7 @@ export default function MobileNav({ onClose }: Props) {
         <CloseButton display={{ base: 'flex', md: 'none' }} onClick={onClose} />
       </Flex>
       <VStack height={'100%'} mx="8">
+        <MobileNavLink href={`${router.basePath}/events/create/general`} label={'Create event'} />
         {links.map((l) => (
           <MobileNavLink {...l} key={l.label} />
         ))}

@@ -68,7 +68,7 @@ export default function EventHeader({ title, authorUsername }: Props) {
           </Flex>
         </Flex>
 
-        <Flex gap={5} alignItems={'center'}>
+        <Flex gap={5} alignItems={'center'} justifyContent={'space-between'}>
           {dataMe?.me && !isAuthor && !enrollmentRequestData?.enrollmentRequestOne && (
             <Button bg={'primary'} _hover={{ bg: 'hprimary' }} color={'white'} onClick={handleClick}>
               Request to join

@@ -57,7 +57,7 @@ export default function EventCreateHeader(props: Props) {
 
   return (
     <SubHeader>
-      <Heading size={'md'} mx={'20vw'}>
+      <Heading size={'md'} mx={{ base: 0, lg: '20vw' }}>
         Create event
       </Heading>
       <PrimaryButton
