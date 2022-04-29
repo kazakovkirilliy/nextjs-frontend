@@ -1,4 +1,4 @@
-import { Flex, Heading, Spinner, Text, VStack } from '@chakra-ui/react';
+import { Heading, Spinner, Text, VStack } from '@chakra-ui/react';
 import ManageEventCard from '../../components/Manage/ManageEventCard';
 import { EventManyCreatedDocument, useEventManyCreatedQuery, useMeQuery } from '../../generated/graphql';
 import { addApolloState, initializeApollo } from '../../lib/apolloClient';
@@ -32,11 +32,12 @@ export default function Manage() {
 
 export async function getServerSideProps({ req }) {
   const apolloClient = initializeApollo();
+  const jwt = req.cookies['uid'];
 
   await apolloClient.query({
     query: EventManyCreatedDocument,
     context: {
-      headers: req.headers,
+      headers: { Authorization: `Bearer ${jwt}` },
     },
   });
 

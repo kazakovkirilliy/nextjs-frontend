@@ -35,16 +35,16 @@ const splitLink = split(
 
 const authMiddleware = new ApolloLink((operation, forward) => {
   let jwt: string | null = null;
-  if (typeof window !== 'undefined' && getCookie('uid')) {
+  if (typeof window !== 'undefined' && getCookie('uid') !== '') {
     jwt = `Bearer ${getCookie('uid')}`;
+
+    operation.setContext(({ headers = {} }) => ({
+      headers: {
+        ...headers,
+        authorization: jwt,
+      },
+    }));
   }
-  // add the authorization to the headers
-  operation.setContext(({ headers = {} }) => ({
-    headers: {
-      ...headers,
-      authorization: jwt,
-    },
-  }));
 
   return forward(operation);
 });
