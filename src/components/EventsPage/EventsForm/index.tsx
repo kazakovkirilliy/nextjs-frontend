@@ -61,6 +61,7 @@ export default function EventsForm({ fetch, refetch }: Props) {
       fetch({
         variables: { ...variables, filters: { field: 'city', value: userCity } },
       });
+      setCurrentPayload({ city: userCity });
     } else {
       fetch({ variables });
     }

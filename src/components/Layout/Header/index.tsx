@@ -1,29 +1,26 @@
 import {
   Box,
-  Flex,
-  Text,
-  IconButton,
   Button,
-  Stack,
-  Collapse,
-  useColorModeValue,
-  useBreakpointValue,
-  useDisclosure,
+  Drawer,
+  DrawerContent,
+  DrawerOverlay,
+  Flex,
+  IconButton,
   Link,
+  Stack,
+  useDisclosure,
 } from '@chakra-ui/react';
 import NextLink from 'next/link';
 import { useRouter } from 'next/router';
-import { useEffect } from 'react';
-import { FaHandPeace } from 'react-icons/fa';
-import { HiOutlineMenuAlt2, HiOutlineX } from 'react-icons/hi';
-import { useEnrollmentRequestedSubscription, useMeQuery } from '../../../generated/graphql';
+import { HiOutlineMenuAlt2 } from 'react-icons/hi';
+import { useMeQuery } from '../../../generated/graphql';
 import DesktopNav from './DesktopNav';
-import MobileNav from './MobileNav';
+import SidebarContent from './MobileNav';
 import Notifications from './Notifications';
 import UserSection from './UserSection';
 
 export default function Header() {
-  const { isOpen, onToggle } = useDisclosure();
+  const { isOpen, onToggle, onClose } = useDisclosure();
   const { data } = useMeQuery();
   const router = useRouter();
 
@@ -43,9 +40,9 @@ export default function Header() {
         <Flex flex={{ base: 1, md: 'auto' }} ml={{ base: -2 }} display={{ base: 'flex', md: 'none' }}>
           <IconButton
             onClick={onToggle}
-            icon={isOpen ? <HiOutlineX /> : <HiOutlineMenuAlt2 />}
+            icon={<HiOutlineMenuAlt2 />}
             variant={'ghost'}
-            aria-label={'Toggle Navigation'}
+            aria-label={'Toggle navigation menu'}
             size={'lg'}
           />
         </Flex>
@@ -113,9 +110,19 @@ export default function Header() {
         </Stack>
       </Flex>
 
-      <Collapse in={isOpen} animateOpacity>
-        <MobileNav />
-      </Collapse>
+      <Drawer
+        autoFocus={false}
+        isOpen={isOpen}
+        placement="left"
+        onClose={onClose}
+        returnFocusOnClose={false}
+        onOverlayClick={onClose}
+      >
+        <DrawerOverlay />
+        <DrawerContent>
+          <SidebarContent onClose={onClose} />
+        </DrawerContent>
+      </Drawer>
     </Box>
   );
 }

@@ -9,6 +9,7 @@ export default function NotificationsButton({ hasUpdates }: Props) {
   return (
     <PopoverTrigger>
       <Link
+        display={{ base: 'none', lg: 'flex' }}
         variant={'button'}
         fontSize={'2xl'}
         position={'relative'}
