@@ -12,6 +12,7 @@ import {
   useDisclosure,
   FormControl,
   FormLabel,
+  Text,
 } from '@chakra-ui/react';
 import { useState } from 'react';
 import { HiTrash } from 'react-icons/hi';
@@ -39,7 +40,12 @@ export default function ButtonEventRemove({ eventTitle, action }: Props) {
       <Modal onClose={onClose} isOpen={isOpen} isCentered>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Confirm removal</ModalHeader>
+          <ModalHeader>
+            Confirm removal
+            <Text fontSize={'sm'} fontWeight={'normal'}>
+              Type <span style={{ fontWeight: 'bold' }}>{eventTitle}</span> to remove event
+            </Text>
+          </ModalHeader>
           <ModalCloseButton />
           <ModalBody>
             <FormControl variant="floating" id="first-name">

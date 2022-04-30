@@ -117,6 +117,7 @@ export default function Header() {
         onClose={onClose}
         returnFocusOnClose={false}
         onOverlayClick={onClose}
+        size={'xs'}
       >
         <DrawerOverlay />
         <DrawerContent>

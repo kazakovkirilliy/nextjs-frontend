@@ -5,11 +5,10 @@ import { CATEGORIES } from '../../../lib/constants';
 
 type Props = {
   currentPayload: FormPayloadType;
-  filterCount: number;
   userCity?: string;
 };
 
-export default function SearchResults({ currentPayload, filterCount, userCity }: Props) {
+export default function SearchResults({ currentPayload, userCity }: Props) {
   return (
     <Flex align={'center'} gap={2} width={'100%'}>
       {currentPayload.search && (
@@ -28,9 +27,6 @@ export default function SearchResults({ currentPayload, filterCount, userCity }:
           <Tag rounded={'md'}>Starts till: {format(new Date(currentPayload.dateTo), 'Pp')}</Tag>
         )}
       </Flex>
-      <Tag gap={2} display={{ base: 'flex', lg: 'none' }}>
-        Filters: {filterCount}
-      </Tag>
     </Flex>
   );
 }

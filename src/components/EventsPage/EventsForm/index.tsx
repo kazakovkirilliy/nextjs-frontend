@@ -1,9 +1,10 @@
 import { QueryLazyOptions } from '@apollo/client';
-import { Flex, IconButton, InputLeftElement } from '@chakra-ui/react';
+import { Button, Flex, InputLeftElement, Tag, Text } from '@chakra-ui/react';
 import dynamic from 'next/dynamic';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { HiChevronDoubleUp, HiOutlineFilter, HiOutlineSearch } from 'react-icons/hi';
+import { HiOutlineSearch } from 'react-icons/hi';
+import { MdFilterList } from 'react-icons/md';
 import { Category, EventManyQueryVariables, useEventManyCitiesQuery } from '../../../generated/graphql';
 import { CATEGORY_OPTIONS, OptionType } from '../../../lib/constants';
 import { parseUserLocationFromStorage } from '../../../lib/utils/parseUserLocationFromStorage';
@@ -108,19 +109,15 @@ export default function EventsForm({ fetch, refetch }: Props) {
             <HiOutlineSearch />
           </InputLeftElement>
         </FormInput>
-        <IconButton
-          icon={filtersShown ? <HiChevronDoubleUp /> : <HiOutlineFilter />}
-          aria-label={'Search filters'}
+        <Button
+          aria-label={'Filter list'}
           onClick={() => setFiltersShown((prev) => !prev)}
-          bg={appliedFilters.length > 0 ? 'primary' : 'gray.200'}
-          color={appliedFilters.length > 0 ? 'white' : 'gray.700'}
-          _hover={{
-            bg: appliedFilters.length > 0 ? 'hprimary' : 'gray.100',
-          }}
-          _active={{
-            bg: appliedFilters.length > 0 ? 'hprimary' : 'gray.100',
-          }}
-        />
+          fontWeight={'normal'}
+          variant={'outline'}
+        >
+          {appliedFilters.length > 0 ? <Tag fontWeight={'bold'}>{appliedFilters.length}</Tag> : <MdFilterList />}
+          <Text ml={2}>Filters</Text>
+        </Button>
       </Flex>
 
       {filtersShown && (
@@ -147,12 +144,12 @@ export default function EventsForm({ fetch, refetch }: Props) {
           <DateTime register={register} setValue={setValue} dateFrom={formValues.dateFrom} dateTo={formValues.dateTo} />
 
           <PrimaryButton px={10} type={'submit'} width={'min-content'}>
-            Apply filters
+            Apply & search
           </PrimaryButton>
         </Flex>
       )}
 
-      <SearchResults currentPayload={currentPayload} filterCount={appliedFilters.length} userCity={userCity} />
+      <SearchResults currentPayload={currentPayload} userCity={userCity} />
     </Flex>
   );
 }
