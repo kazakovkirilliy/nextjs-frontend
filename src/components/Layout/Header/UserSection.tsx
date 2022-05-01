@@ -28,7 +28,7 @@ export default function UserSection(props: Props) {
 
   return (
     <>
-      <Popover placement="top-start" isOpen={isOpen}>
+      <Popover placement="top-start" isOpen={isOpen} closeOnBlur={true}>
         <PopoverTrigger>
           <Avatar size={'sm'} src={props.imageUrl ?? ''} cursor={'pointer'} onClick={onOpen} />
         </PopoverTrigger>
@@ -53,7 +53,8 @@ export default function UserSection(props: Props) {
               height={'max-content'}
               _hover={{ bg: 'green.100' }}
               onClick={() => {
-                router.push(`${router.basePath}/events/saved`).then(() => onClose());
+                router.push(`${router.basePath}/events/saved`);
+                onClose();
               }}
             >
               <HiBookmark />
@@ -69,7 +70,8 @@ export default function UserSection(props: Props) {
               height={'max-content'}
               _hover={{ bg: 'yellow.100' }}
               onClick={() => {
-                router.push(`${router.basePath}/events/manage`).then(() => onClose());
+                router.push(`${router.basePath}/events/manage`);
+                onClose();
               }}
             >
               <HiCollection />

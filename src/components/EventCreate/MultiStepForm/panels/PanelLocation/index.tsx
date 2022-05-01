@@ -33,7 +33,7 @@ export default function StepLocation() {
         </Button>
 
         <PrimaryButton alignSelf={'flex-end'} onClick={() => router.push('./image')} isDisabled={!isLocationFilled()}>
-          Next
+          Save & Continue
         </PrimaryButton>
       </Flex>
     </VStack>

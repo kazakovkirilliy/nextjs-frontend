@@ -84,7 +84,7 @@ export default function StepGeneral() {
       />
 
       <PrimaryButton alignSelf={'flex-end'} type={'submit'}>
-        Next
+        Save & Continue
       </PrimaryButton>
     </VStack>
   );

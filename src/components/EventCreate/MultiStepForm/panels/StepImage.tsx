@@ -79,7 +79,7 @@ export default function StepImage() {
         </Button>
 
         <PrimaryButton alignSelf={'flex-end'} onClick={() => router.push('./preview')}>
-          Next
+          Save & Continue
         </PrimaryButton>
       </Flex>
     </VStack>
