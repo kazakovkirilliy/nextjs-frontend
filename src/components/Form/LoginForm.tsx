@@ -1,12 +1,11 @@
-import { VStack, Button, Text } from '@chakra-ui/react';
+import { Button, Text, VStack } from '@chakra-ui/react';
 import { GraphQLError } from 'graphql';
-import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
-import { useForm, SubmitHandler } from 'react-hook-form';
+import { SubmitHandler, useForm } from 'react-hook-form';
 import { HiCheckCircle } from 'react-icons/hi';
-import { LoginMutationVariables, useLoginMutation, MeDocument, useMeLazyQuery } from '../../generated/graphql';
-import getCookie from '../../lib/utils/getCookie';
+import { LoginMutationVariables, useLoginMutation, useMeLazyQuery } from '../../generated/graphql';
+import { AUTH_COOKIE_EXPIRATION } from '../../lib/constants';
 import { FormInput } from './FormInput';
 import { FormPasswordInput } from './FormPasswordInput';
 
@@ -29,7 +28,7 @@ export default function LoginForm() {
       .then(async (res) => {
         if (res && res.data?.login) {
           const setCookie = (await import('../../lib/utils/setCookie')).default; // optimize bundle -> https://nextjs.org/docs/advanced-features/dynamic-import
-          setCookie('uid', res.data.login, 1);
+          setCookie('uid', res.data.login, AUTH_COOKIE_EXPIRATION);
           fetchMe()
             .then(() => {
               router.push('/');

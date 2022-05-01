@@ -34,13 +34,7 @@ export default function EventsForm({ fetch, refetch }: Props) {
   const [cityOptions, setCityOptions] = useState<OptionType[]>([]);
   const { data, loading } = useEventManyCitiesQuery();
   const [currentPayload, setCurrentPayload] = useState<FormPayloadType>({});
-  const userCity = useMemo(() => {
-    const city = parseUserLocationFromStorage()?.city;
-    if (city && cityOptions.find((o) => o.value === userCity)) {
-      return city;
-    }
-    return;
-  }, [cityOptions]);
+  const userCity = parseUserLocationFromStorage()?.city;
 
   useEffect(() => {
     if (data?.eventManyCities) {
@@ -138,7 +132,7 @@ export default function EventsForm({ fetch, refetch }: Props) {
               options={cityOptions}
               placeholder={'City'}
               width={'100%'}
-              defaultSelectValue={userCity ? { label: userCity, value: userCity } : undefined}
+              defaultSelectValue={userCity ? cityOptions.find((o) => o.value === userCity) : undefined}
               isLoading={loading}
             />
             <FormSelect

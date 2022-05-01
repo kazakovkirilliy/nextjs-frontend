@@ -9,7 +9,7 @@ export default function Notifications() {
   const hasUpdates = uncheckedRequests.length > 0 || responses.length > 0;
   const router = useRouter();
   return (
-    <Popover>
+    <Popover placement="top-start">
       <NotificationsButton hasUpdates={hasUpdates} />
       <PopoverContent width={{ base: '100vw', md: 400 }} maxHeight={'90vh'}>
         <PopoverHeader fontWeight="semibold" justifyContent={'space-between'} alignItems={'center'} display={'flex'}>

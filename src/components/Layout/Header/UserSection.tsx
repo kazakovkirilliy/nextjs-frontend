@@ -12,6 +12,7 @@ import {
   useDisclosure,
 } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
+import { useState } from 'react';
 import { HiBookmark, HiCollection, HiLogout } from 'react-icons/hi';
 
 type Props = {
@@ -22,15 +23,17 @@ type Props = {
 
 export default function UserSection(props: Props) {
   const { name, username, imageUrl } = props;
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  const [isOpen, setIsOpen] = useState(false);
+  const open = () => setIsOpen(!isOpen);
+  const close = () => setIsOpen(false);
 
   const router = useRouter();
 
   return (
     <>
-      <Popover placement="top-start" isOpen={isOpen} closeOnBlur={true}>
+      <Popover placement="top-start" isOpen={isOpen} onClose={close}>
         <PopoverTrigger>
-          <Avatar size={'sm'} src={props.imageUrl ?? ''} cursor={'pointer'} onClick={onOpen} />
+          <Avatar size={'sm'} src={props.imageUrl ?? ''} cursor={'pointer'} onClick={open} />
         </PopoverTrigger>
         <PopoverContent width={{ base: 'auto', md: 300 }} maxHeight={'90vh'}>
           <PopoverHeader>
@@ -54,7 +57,7 @@ export default function UserSection(props: Props) {
               _hover={{ bg: 'green.100' }}
               onClick={() => {
                 router.push(`${router.basePath}/events/saved`);
-                onClose();
+                close();
               }}
             >
               <HiBookmark />
@@ -71,7 +74,7 @@ export default function UserSection(props: Props) {
               _hover={{ bg: 'yellow.100' }}
               onClick={() => {
                 router.push(`${router.basePath}/events/manage`);
-                onClose();
+                close();
               }}
             >
               <HiCollection />

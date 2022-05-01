@@ -1,5 +1,6 @@
 import { Category } from '../generated/graphql';
 
+// CATEGORIES
 type CategoriesType = {
   [K in Category]: string;
 };
@@ -33,3 +34,6 @@ export const CATEGORY_OPTIONS: OptionType[] = Object.entries(CATEGORIES).map(([v
   label,
   value,
 }));
+
+// COOKIE
+export const AUTH_COOKIE_EXPIRATION = 1;

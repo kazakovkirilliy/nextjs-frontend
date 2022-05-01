@@ -5,6 +5,7 @@ import React, { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { HiCheckCircle } from 'react-icons/hi';
 import { RegisterMutationVariables, useMeLazyQuery, useRegisterMutation } from '../../generated/graphql';
+import { AUTH_COOKIE_EXPIRATION } from '../../lib/constants';
 import { FormInput } from './FormInput';
 import { FormPasswordInput } from './FormPasswordInput';
 
@@ -26,7 +27,7 @@ export default function RegistrationForm() {
       .then(async (res) => {
         if (res && res.data?.register) {
           const setCookie = (await import('../../lib/utils/setCookie')).default;
-          setCookie('uid', res.data.register, 1);
+          setCookie('uid', res.data.register, AUTH_COOKIE_EXPIRATION);
           fetchMe()
             .then(() => {
               router.push('/');
