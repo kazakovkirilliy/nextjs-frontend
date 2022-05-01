@@ -1,5 +1,4 @@
 import {
-  Box,
   Button,
   Drawer,
   DrawerContent,
@@ -25,7 +24,7 @@ export default function Header() {
   const router = useRouter();
 
   return (
-    <Box>
+    <>
       <Flex
         bg={'white'}
         color={'gray.600'}
@@ -124,6 +123,6 @@ export default function Header() {
           <SidebarContent onClose={onClose} />
         </DrawerContent>
       </Drawer>
-    </Box>
+    </>
   );
 }

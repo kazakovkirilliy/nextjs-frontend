@@ -7,11 +7,10 @@ import { useNotifications } from './useNotifications';
 export default function Notifications() {
   const { uncheckedRequests, responses } = useNotifications();
   const hasUpdates = uncheckedRequests.length > 0 || responses.length > 0;
-  const router = useRouter();
   return (
     <Popover placement="top-start">
       <NotificationsButton hasUpdates={hasUpdates} />
-      <PopoverContent width={{ base: '100vw', md: 400 }} maxHeight={'90vh'}>
+      <PopoverContent width={{ base: '100%', md: 400 }} maxHeight={'90vh'}>
         <PopoverHeader fontWeight="semibold" justifyContent={'space-between'} alignItems={'center'} display={'flex'}>
           Notifications
         </PopoverHeader>
