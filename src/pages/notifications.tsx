@@ -1,6 +1,4 @@
-import dynamic from 'next/dynamic';
-
-const NotificationTabs = dynamic(() => import('../components/Notifications/NotificationTabs'), { ssr: false });
+import NotificationTabs from '../components/Notifications/NotificationTabs';
 
 type Props = {};
 

@@ -1,35 +1,14 @@
-import {
-  Box,
-  Button,
-  Flex,
-  FormControl,
-  FormErrorMessage,
-  FormHelperText,
-  FormLabel,
-  Grid,
-  Input,
-  InputGroup,
-  InputLeftElement,
-  InputRightElement,
-  VStack,
-  Text,
-  Link,
-  IconButton,
-} from '@chakra-ui/react';
-import router, { useRouter } from 'next/router';
+import { Button, Text, VStack } from '@chakra-ui/react';
+import { GraphQLError } from 'graphql';
+import router from 'next/router';
 import React, { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { MeDocument, RegisterMutationVariables, useRegisterMutation } from '../../generated/graphql';
-import NextLink from 'next/link';
+import { HiCheckCircle } from 'react-icons/hi';
+import { RegisterMutationVariables, useMeLazyQuery, useRegisterMutation } from '../../generated/graphql';
 import { FormInput } from './FormInput';
-import { HiEyeOff, HiEye, HiCheckCircle } from 'react-icons/hi';
 import { FormPasswordInput } from './FormPasswordInput';
-import PrimaryButton from '../base/PrimaryButton';
-import { GraphQLError } from 'graphql';
 
-type Props = {};
-
-export default function RegistrationForm(props: Props) {
+export default function RegistrationForm() {
   const [errorMessage, setErrorMessage] = useState('');
 
   const {
@@ -38,9 +17,8 @@ export default function RegistrationForm(props: Props) {
     formState: { errors, isSubmitting },
   } = useForm<RegisterMutationVariables['data']>();
 
-  const [registerUser, { error, data }] = useRegisterMutation({
-    refetchQueries: [MeDocument, 'me'],
-  });
+  const [registerUser, { data }] = useRegisterMutation();
+  const [fetchMe] = useMeLazyQuery();
 
   const onSubmit: SubmitHandler<RegisterMutationVariables['data']> = async (data) => {
     await registerUser({ variables: { data } })
@@ -49,8 +27,13 @@ export default function RegistrationForm(props: Props) {
         if (res && res.data?.register) {
           const setCookie = (await import('../../lib/utils/setCookie')).default;
           setCookie('uid', res.data.register, 1);
-          // localStorage.setItem('uid', res.data.register);
-          router.push('/');
+          fetchMe()
+            .then(() => {
+              router.push('/');
+            })
+            .catch(() => {
+              setErrorMessage('Unknown error ocured');
+            });
         } else {
           setErrorMessage('Unknown error ocured');
         }

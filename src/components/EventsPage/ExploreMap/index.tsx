@@ -3,7 +3,7 @@ import { getCenter } from 'geolib';
 import { GeolibInputCoordinates } from 'geolib/es/types';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import NextImage from 'next/image';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import ReactMapGl, { GeolocateControl, MapRef, Marker, Popup } from 'react-map-gl';
 import { Event } from '../../../generated/graphql';
 import { areEqual } from '../../../lib/utils/areEqual';
@@ -22,12 +22,16 @@ export default function ExploreMap({ events }: Props) {
   const [mapLoaded, setMapLoaded] = useState(false);
   const [selectedEvent, setSelectedEvent] = useState<SelectedEvent>(null);
   // transform events to match {longitude: number, latitude: number}[]
-  const coordinates: GeolibInputCoordinates[] = events
-    ? events.map(({ longitude, latitude }) => ({
-        longitude,
-        latitude,
-      }))
-    : [];
+  const coordinates: GeolibInputCoordinates[] = useMemo(
+    () =>
+      events
+        ? events.map(({ longitude, latitude }) => ({
+            longitude,
+            latitude,
+          }))
+        : [],
+    [events]
+  );
 
   // get center of coordinates
   const center = getCenter(coordinates);

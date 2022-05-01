@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import getCookie from '../lib/utils/getCookie';
 
 export async function middleware(req: NextRequest, res: NextResponse) {
   const authPages = /\/login|\/register/;

@@ -1,9 +1,11 @@
 import { Text, Link } from '@chakra-ui/react';
 import NextLink from 'next/link';
-import router from 'next/router';
-type Props = { href: string; label: string; icon?: JSX.Element };
+import { useRouter } from 'next/router';
 
-export default function MobileNavLink({ href, label, icon }: Props) {
+type Props = { href: string; label: string; icon?: JSX.Element; onClick: () => void };
+
+export default function MobileNavLink({ href, label, icon, onClick }: Props) {
+  const router = useRouter();
   return (
     <NextLink href={href} passHref key={label}>
       <Link
@@ -16,6 +18,7 @@ export default function MobileNavLink({ href, label, icon }: Props) {
         gap={2}
         fontSize={'lg'}
         py={2}
+        onClick={() => onClick()}
       >
         <Text color={router.pathname.startsWith(href) ? 'gray.700' : 'gray.500'}>{icon}</Text>
         {label}

@@ -31,14 +31,16 @@ export default function StaticMap({ address, longitude, latitude }: Props) {
           rounded={'md'}
           overflow={'hidden'}
         >
-          <LinkOverlay href={`http://www.google.com/maps/place/${latitude},${longitude}`} target={'_blank'}>
-            <NextImage
-              loader={customLoader}
-              src={`https://api.mapbox.com/styles/v1/kazakovkirilliy/cl1ezg2vy003l15qsx7o78fjp/static/pin-s+${mapParams.markerColor}(${longitude},${latitude})/${longitude},${latitude},14,0/${mapParams.width}x${mapParams.height}?access_token=${process.env.MAPS}`}
-              layout={'fill'}
-              objectFit={'cover'}
-            />
-          </LinkOverlay>
+          {longitude && latitude && (
+            <LinkOverlay href={`http://www.google.com/maps/place/${latitude},${longitude}`} target={'_blank'}>
+              <NextImage
+                loader={customLoader}
+                src={`https://api.mapbox.com/styles/v1/kazakovkirilliy/cl1ezg2vy003l15qsx7o78fjp/static/pin-s+${mapParams.markerColor}(${longitude},${latitude})/${longitude},${latitude},14,0/${mapParams.width}x${mapParams.height}?access_token=${process.env.MAPS}`}
+                layout={'fill'}
+                objectFit={'cover'}
+              />
+            </LinkOverlay>
+          )}
         </LinkBox>
       </VStack>
     </Box>

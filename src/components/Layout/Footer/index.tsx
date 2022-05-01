@@ -1,10 +1,7 @@
-import { Container, Stack, ButtonGroup, IconButton, Text, Flex } from '@chakra-ui/react';
-import { FaLinkedin, FaGithub, FaTwitter } from 'react-icons/fa';
+import { Flex, Stack, Text } from '@chakra-ui/react';
 import NextImage from 'next/image';
 
-type Props = {};
-
-export default function Footer(props: Props) {
+export default function Footer() {
   return (
     <Flex
       as="footer"
@@ -16,25 +13,7 @@ export default function Footer(props: Props) {
       mt={'auto'}
     >
       <Stack spacing={{ base: '4', md: '5' }}>
-        <Stack justify="space-between" direction="row" align="center">
-          <NextImage src="/cvut.svg" height={100} width={100} />
-          <ButtonGroup variant="ghost">
-            <IconButton
-              as="a"
-              href="#"
-              aria-label="LinkedIn"
-              icon={<FaLinkedin fontSize="1.25rem" />}
-              _hover={{ bg: 'gray.50' }}
-            />
-            <IconButton
-              as="a"
-              href="#"
-              aria-label="GitHub"
-              icon={<FaGithub fontSize="1.25rem" />}
-              _hover={{ bg: 'gray.50' }}
-            />
-          </ButtonGroup>
-        </Stack>
+        <NextImage src="/cvut.svg" height={50} width={50} />
         <Text fontSize="sm" color="subtle" align={'center'}>
           &copy; {new Date().getFullYear()} Kirill Kazakov
         </Text>

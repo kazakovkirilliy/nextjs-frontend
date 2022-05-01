@@ -1,10 +1,6 @@
 import React from 'react';
 import AuthWrapper from '../components/AuthWrapper';
-import dynamic from 'next/dynamic';
-
-const RegistrationForm = dynamic(() => import('../components/Form/RegistrationForm'), {
-  ssr: false,
-});
+import RegistrationForm from '../components/Form/RegistrationForm';
 
 export default function Register() {
   return (

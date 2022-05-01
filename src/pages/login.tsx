@@ -1,9 +1,5 @@
-import dynamic from 'next/dynamic';
 import AuthWrapper from '../components/AuthWrapper';
-
-const LoginForm = dynamic(() => import('../components/Form/LoginForm'), {
-  ssr: false,
-});
+import LoginForm from '../components/Form/LoginForm';
 
 export default function Login() {
   return (

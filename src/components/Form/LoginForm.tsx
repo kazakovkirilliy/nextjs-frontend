@@ -5,7 +5,8 @@ import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { HiCheckCircle } from 'react-icons/hi';
-import { LoginMutationVariables, useLoginMutation, MeDocument } from '../../generated/graphql';
+import { LoginMutationVariables, useLoginMutation, MeDocument, useMeLazyQuery } from '../../generated/graphql';
+import getCookie from '../../lib/utils/getCookie';
 import { FormInput } from './FormInput';
 import { FormPasswordInput } from './FormPasswordInput';
 
@@ -19,7 +20,8 @@ export default function LoginForm() {
     formState: { errors, isSubmitting },
   } = useForm<LoginMutationVariables['data']>();
 
-  const [loginUser, { data }] = useLoginMutation({ refetchQueries: [MeDocument, 'me'] });
+  const [loginUser, { data }] = useLoginMutation();
+  const [fetchMe] = useMeLazyQuery();
 
   const onSubmit: SubmitHandler<LoginMutationVariables['data']> = async (data) => {
     await loginUser({ variables: { data } })
@@ -28,8 +30,13 @@ export default function LoginForm() {
         if (res && res.data?.login) {
           const setCookie = (await import('../../lib/utils/setCookie')).default; // optimize bundle -> https://nextjs.org/docs/advanced-features/dynamic-import
           setCookie('uid', res.data.login, 1);
-          // localStorage.setItem('uid', res.data.login);
-          router.push('/');
+          fetchMe()
+            .then(() => {
+              router.push('/');
+            })
+            .catch(() => {
+              setErrorMessage('Unknown error ocured');
+            });
         } else {
           setErrorMessage('Unknown error ocured');
         }

@@ -69,7 +69,9 @@ export default function EventSideInfo({
         </VStack>
       </Box>
 
-      <StaticMap address={address} longitude={longitude} latitude={latitude} />
+      {(address || longitude !== -10000000) && (
+        <StaticMap address={address} longitude={longitude} latitude={latitude} />
+      )}
     </Flex>
   );
 }

@@ -21,8 +21,7 @@ export default function EventCreateHeader(props: Props) {
   const uploadedFile = useCreateEventStore((state) => state.uploadedFile);
   const setUploadedFile = useCreateEventStore((state) => state.setUploadedFile);
 
-  const isPayloadFilled =
-    payload.title && payload.category && payload.dateFrom && payload.longitude && payload.latitude;
+  const isPayloadFilled = payload.title && payload.category && payload.dateFrom && payload.address;
 
   const onClick = async () => {
     if (!isPayloadFilled) return;

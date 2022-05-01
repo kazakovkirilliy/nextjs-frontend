@@ -2,6 +2,7 @@ import { Center, Flex, Heading, Spinner } from '@chakra-ui/react';
 import type { NextPage } from 'next';
 import dynamic from 'next/dynamic';
 import { useState, useEffect } from 'react';
+import EventsForm from '../../components/EventsPage/EventsForm';
 import { EventManyDocument, useEventManyLazyQuery } from '../../generated/graphql';
 import { initializeApollo, addApolloState } from '../../lib/apolloClient';
 
@@ -10,10 +11,6 @@ const ExploreMap = dynamic(() => import('../../components/EventsPage/ExploreMap'
 });
 
 const EventsGrid = dynamic(() => import('../../components/EventsPage/ExploreGrid'), {
-  ssr: false,
-});
-
-const EventsForm = dynamic(() => import('../../components/EventsPage/EventsForm'), {
   ssr: false,
 });
 

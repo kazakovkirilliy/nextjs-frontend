@@ -37,12 +37,13 @@ export default function MobileNav({ onClose }: Props) {
             type={'submit'}
             width={'full'}
             p={2}
+            onClick={() => onClose()}
           >
             <MdAddCircle /> Create event
           </Link>
         </NextLink>
         {links.map((l) => (
-          <MobileNavLink {...l} key={l.label} />
+          <MobileNavLink {...l} key={l.label} onClick={() => onClose()} />
         ))}
       </VStack>
     </Box>

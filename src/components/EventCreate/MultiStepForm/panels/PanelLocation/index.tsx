@@ -11,7 +11,7 @@ export type Coordinates = {
 };
 
 export default function StepLocation() {
-  const { isLocationFilled, address } = useCreateEventStore(
+  const { isLocationFilled } = useCreateEventStore(
     (state) => ({
       isLocationFilled: state.isLocationFilled,
       address: state.payload.address,
@@ -23,11 +23,7 @@ export default function StepLocation() {
     <VStack gap={5} px={{ base: 2, md: '30%' }}>
       <Heading size={'lg'}>Peek location</Heading>
 
-      <Box
-        style={{ width: '100%', height: '300px' }}
-        id="map"
-        position={'relative'}
-      >
+      <Box style={{ width: '100%', height: '300px' }} id="map" position={'relative'}>
         <MapPickLocation />
       </Box>
 
@@ -36,11 +32,7 @@ export default function StepLocation() {
           Previous
         </Button>
 
-        <PrimaryButton
-          alignSelf={'flex-end'}
-          onClick={() => router.push('./image')}
-          isDisabled={!isLocationFilled}
-        >
+        <PrimaryButton alignSelf={'flex-end'} onClick={() => router.push('./image')} isDisabled={!isLocationFilled()}>
           Next
         </PrimaryButton>
       </Flex>
