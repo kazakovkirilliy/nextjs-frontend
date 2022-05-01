@@ -1,7 +1,7 @@
 import { QueryLazyOptions } from '@apollo/client';
 import { Button, Flex, InputLeftElement, Tag, Text } from '@chakra-ui/react';
 import dynamic from 'next/dynamic';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { HiOutlineSearch } from 'react-icons/hi';
 import { MdFilterList } from 'react-icons/md';
@@ -33,8 +33,14 @@ export default function EventsForm({ fetch, refetch }: Props) {
   const [filtersShown, setFiltersShown] = useState(false);
   const [cityOptions, setCityOptions] = useState<OptionType[]>([]);
   const { data, loading } = useEventManyCitiesQuery();
-  const userCity = parseUserLocationFromStorage()?.city;
   const [currentPayload, setCurrentPayload] = useState<FormPayloadType>({});
+  const userCity = useMemo(() => {
+    const city = parseUserLocationFromStorage()?.city;
+    if (city && cityOptions.find((o) => o.value === userCity)) {
+      return city;
+    }
+    return;
+  }, [cityOptions]);
 
   useEffect(() => {
     if (data?.eventManyCities) {
@@ -114,8 +120,11 @@ export default function EventsForm({ fetch, refetch }: Props) {
           onClick={() => setFiltersShown((prev) => !prev)}
           fontWeight={'normal'}
           variant={'outline'}
+          leftIcon={
+            appliedFilters.length > 0 ? <Tag fontWeight={'bold'}>{appliedFilters.length}</Tag> : <MdFilterList />
+          }
+          width={'max-content'}
         >
-          {appliedFilters.length > 0 ? <Tag fontWeight={'bold'}>{appliedFilters.length}</Tag> : <MdFilterList />}
           <Text ml={2}>Filters</Text>
         </Button>
       </Flex>
