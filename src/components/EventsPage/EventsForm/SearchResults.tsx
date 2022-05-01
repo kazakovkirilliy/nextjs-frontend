@@ -12,7 +12,7 @@ export default function SearchResults({ currentPayload, userCity }: Props) {
   return (
     <Flex align={'center'} gap={2} width={'100%'}>
       {currentPayload.search && (
-        <Text maxWidth={'30%'} noOfLines={1} wordBreak={'break-all'}>
+        <Text maxWidth={{ base: '100%', lg: '30%' }} noOfLines={1} wordBreak={'break-all'}>
           Search for <i>&ldquo;{currentPayload.search}&ldquo;</i>
         </Text>
       )}
