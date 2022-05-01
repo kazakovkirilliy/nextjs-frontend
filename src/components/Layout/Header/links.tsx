@@ -1,5 +1,4 @@
-import { HiBookOpen, HiHeart, HiLocationMarker } from 'react-icons/hi';
-import { MdExplore, MdLibraryBooks, MdLocationOn } from 'react-icons/md';
+import { MdExplore, MdLibraryBooks } from 'react-icons/md';
 
 type LinkType = {
   label: string;

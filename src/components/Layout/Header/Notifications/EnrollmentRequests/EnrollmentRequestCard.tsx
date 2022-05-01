@@ -1,14 +1,14 @@
-import { Avatar, Flex, Box, Text, Button, HStack, Link, Skeleton } from '@chakra-ui/react';
+import { Avatar, Box, Button, Flex, HStack, Link, Text } from '@chakra-ui/react';
 import Image from 'next/image';
 import NextLink from 'next/link';
 import { useRouter } from 'next/router';
+import { HiCheck } from 'react-icons/hi';
 import {
   useEnrollmentRequestAcceptOneMutation,
   useEnrollmentRequestDeclineOneMutation,
   useEventOneQuery,
   useUserOneQuery,
 } from '../../../../../generated/graphql';
-import { HiCheck } from 'react-icons/hi';
 
 type Props = {
   username: string;
@@ -18,10 +18,10 @@ type Props = {
 
 export default function EnrollmentRequestCard({ username, eventId, removeRequest }: Props) {
   const router = useRouter();
-  const { data: userData, loading: loadingUser } = useUserOneQuery({
+  const { data: userData } = useUserOneQuery({
     variables: { username },
   });
-  const { data: eventData, loading: loadingEvent } = useEventOneQuery({
+  const { data: eventData } = useEventOneQuery({
     variables: { id: eventId },
   });
   const [acceptRequest] = useEnrollmentRequestAcceptOneMutation({ variables: { username, eventId } });
@@ -40,8 +40,8 @@ export default function EnrollmentRequestCard({ username, eventId, removeRequest
             <Text fontWeight={'bold'}>{userData?.user.name}</Text>
           </Flex>
           <Text fontSize={'sm'} noOfLines={2}>
-            wants to participate in{' '}
-            <NextLink href={`${router.pathname}/${eventId}`} passHref>
+            wants to participate in
+            <NextLink href={`${router.basePath}/events/${eventId}`} passHref>
               <Link fontWeight={'bold'}>{eventData.eventOne.title}</Link>
             </NextLink>
           </Text>
