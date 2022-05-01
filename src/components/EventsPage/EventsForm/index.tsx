@@ -125,7 +125,7 @@ export default function EventsForm({ fetch, refetch }: Props) {
           }
           width={'max-content'}
         >
-          <Text ml={2}>Filters</Text>
+          <Text>Filters</Text>
         </Button>
       </Flex>
 
